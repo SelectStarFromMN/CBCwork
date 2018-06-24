@@ -1,0 +1,2 @@
+DROP DATABASE IF EXISTS passportjs;
+CREATE DATABASE passportjs;
