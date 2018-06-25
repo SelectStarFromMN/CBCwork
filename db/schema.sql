@@ -9,6 +9,8 @@ USE bootcampface_db;
 -- ****************** SqlDBM: MySQL ******************;
 -- ***************************************************;
 /*
+DROP TABLE Newsfeed;
+
 
 DROP TABLE StudyGroupMember;
 
@@ -35,12 +37,12 @@ DROP TABLE Bootcamp;
 
 
 DROP TABLE RoleType;
-
 */
+
 
 -- ************************************** StudyGroup
 
-CREATE TABLE IF NOT EXISTS StudyGroup
+CREATE TABLE StudyGroup
 (
  StudyGroupId   INT NOT NULL AUTO_INCREMENT ,
  studyGroupName VARCHAR(45) NOT NULL ,
@@ -51,7 +53,7 @@ PRIMARY KEY (StudyGroupId)
 
 -- ************************************** socialMediaType
 
-CREATE TABLE IF NOT EXISTS socialMediaType
+CREATE TABLE socialMediaType
 (
  socialMediaTypeId INT NOT NULL AUTO_INCREMENT ,
  socialMediaName   VARCHAR(45) NOT NULL ,
@@ -61,18 +63,18 @@ PRIMARY KEY (socialMediaTypeId)
 
 -- ************************************** Bootcamp
 
-CREATE TABLE IF NOT EXISTS Bootcamp
+CREATE TABLE Bootcamp
 (
  bootcampId  INT NOT NULL AUTO_INCREMENT ,
  programName VARCHAR(45) NOT NULL ,
- state  VARCHAR(45) NOT NULL ,
+ state       VARCHAR(45) NOT NULL ,
 
 PRIMARY KEY (bootcampId)
 );
 
 -- ************************************** RoleType
 
-CREATE TABLE IF NOT EXISTS RoleType
+CREATE TABLE RoleType
 (
  roleTypeId INT NOT NULL AUTO_INCREMENT ,
  roleName   VARCHAR(45) NOT NULL ,
@@ -82,7 +84,7 @@ PRIMARY KEY (roleTypeId)
 
 -- ************************************** SocialMediaLink
 
-CREATE TABLE IF NOT EXISTS SocialMediaLink
+CREATE TABLE SocialMediaLink
 (
  socialMediaLinkId INT NOT NULL AUTO_INCREMENT ,
  url               VARCHAR(256) NOT NULL ,
@@ -95,7 +97,7 @@ CONSTRAINT FK_91 FOREIGN KEY fkIdx_91 (socialMediaTypeId) REFERENCES socialMedia
 
 -- ************************************** Cohort
 
-CREATE TABLE IF NOT EXISTS Cohort
+CREATE TABLE Cohort
 (
  cohortId   INT NOT NULL AUTO_INCREMENT ,
  cohortName VARCHAR(45) NOT NULL ,
@@ -108,7 +110,7 @@ CONSTRAINT FK_64 FOREIGN KEY fkIdx_64 (bootcampId) REFERENCES Bootcamp (bootcamp
 
 -- ************************************** Profile
 
-CREATE TABLE IF NOT EXISTS Profile
+CREATE TABLE Profile
 (
  profileId         INT NOT NULL AUTO_INCREMENT ,
  userName          VARCHAR(45) NOT NULL ,
@@ -131,9 +133,23 @@ KEY fkIdx_95 (socialMediaLinkId),
 CONSTRAINT FK_95 FOREIGN KEY fkIdx_95 (socialMediaLinkId) REFERENCES SocialMediaLink (socialMediaLinkId)
 );
 
+-- ************************************** Newsfeed
+
+CREATE TABLE Newsfeed
+(
+ newsfeedId     INT NOT NULL AUTO_INCREMENT ,
+ eventTimestamp TIMESTAMP NOT NULL ,
+ newsItem       TEXT NOT NULL ,
+ profileId      INT NOT NULL ,
+
+PRIMARY KEY (newsfeedId),
+KEY fkIdx_122 (profileId),
+CONSTRAINT FK_122 FOREIGN KEY fkIdx_122 (profileId) REFERENCES Profile (profileId)
+);
+
 -- ************************************** StudyGroupMember
 
-CREATE TABLE IF NOT EXISTS StudyGroupMember
+CREATE TABLE StudyGroupMember
 (
  StudyGroupId INT NOT NULL ,
  profileId    INT NOT NULL ,
@@ -147,7 +163,7 @@ CONSTRAINT FK_111 FOREIGN KEY fkIdx_111 (profileId) REFERENCES Profile (profileI
 
 -- ************************************** Skills
 
-CREATE TABLE IF NOT EXISTS Skills
+CREATE TABLE Skills
 (
  skillsId    INT NOT NULL AUTO_INCREMENT ,
  profileId   INT NOT NULL ,
