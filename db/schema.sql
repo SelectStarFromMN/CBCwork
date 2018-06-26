@@ -9,166 +9,166 @@ USE bootcampface_db;
 -- ****************** SqlDBM: MySQL ******************;
 -- ***************************************************;
 /*
-DROP TABLE `Newsfeed`;
+DROP TABLE Newsfeed;
 
 
-DROP TABLE `StudyGroupMember`;
+DROP TABLE StudyGroupMember;
 
 
-DROP TABLE `SocialMediaLink`;
+DROP TABLE SocialMediaLink;
 
 
-DROP TABLE `Skills`;
+DROP TABLE Skills;
 
 
-DROP TABLE `Profile`;
+DROP TABLE Profile;
 
 
-DROP TABLE `Cohort`;
+DROP TABLE Cohort;
 
 
-DROP TABLE `StudyGroup`;
+DROP TABLE StudyGroup;
 
 
-DROP TABLE `socialMediaType`;
+DROP TABLE socialMediaType;
 
 
-DROP TABLE `Bootcamp`;
+DROP TABLE Bootcamp;
 
 
-DROP TABLE `RoleType`;
+DROP TABLE RoleType;
 */
 
 
--- ************************************** `StudyGroup`
+-- ************************************** StudyGroup
 
-CREATE TABLE `StudyGroup`
+CREATE TABLE StudyGroup
 (
- `StudyGroupId`   INT NOT NULL AUTO_INCREMENT ,
- `studyGroupName` VARCHAR(45) NOT NULL ,
- `scheduleJSON`   MEDIUMTEXT ,
+ StudyGroupId   INT NOT NULL AUTO_INCREMENT ,
+ studyGroupName VARCHAR(45) NOT NULL ,
+ scheduleJSON   MEDIUMTEXT ,
 
-PRIMARY KEY (`StudyGroupId`)
+PRIMARY KEY (StudyGroupId)
 );
 
--- ************************************** `socialMediaType`
+-- ************************************** socialMediaType
 
-CREATE TABLE `socialMediaType`
+CREATE TABLE socialMediaType
 (
- `socialMediaTypeId` INT NOT NULL AUTO_INCREMENT ,
- `socialMediaName`   VARCHAR(45) NOT NULL ,
+ socialMediaTypeId INT NOT NULL AUTO_INCREMENT ,
+ socialMediaName   VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (`socialMediaTypeId`)
+PRIMARY KEY (socialMediaTypeId)
 );
 
--- ************************************** `Bootcamp`
+-- ************************************** Bootcamp
 
-CREATE TABLE `Bootcamp`
+CREATE TABLE Bootcamp
 (
- `bootcampId`  INT NOT NULL AUTO_INCREMENT ,
- `programName` VARCHAR(45) NOT NULL ,
- `state`       VARCHAR(45) NOT NULL ,
+ bootcampId  INT NOT NULL AUTO_INCREMENT ,
+ programName VARCHAR(45) NOT NULL ,
+ state       VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (`bootcampId`)
+PRIMARY KEY (bootcampId)
 );
 
--- ************************************** `RoleType`
+-- ************************************** RoleType
 
-CREATE TABLE `RoleType`
+CREATE TABLE RoleType
 (
- `roleTypeId` INT NOT NULL AUTO_INCREMENT ,
- `roleName`   VARCHAR(45) NOT NULL ,
+ roleTypeId INT NOT NULL AUTO_INCREMENT ,
+ roleName   VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (`roleTypeId`)
+PRIMARY KEY (roleTypeId)
 );
 
--- ************************************** `Cohort`
+-- ************************************** Cohort
 
-CREATE TABLE `Cohort`
+CREATE TABLE Cohort
 (
- `cohortId`   INT NOT NULL AUTO_INCREMENT ,
- `cohortName` VARCHAR(45) NOT NULL ,
- `bootcampId` INT NOT NULL ,
+ cohortId   INT NOT NULL AUTO_INCREMENT ,
+ cohortName VARCHAR(45) NOT NULL ,
+ bootcampId INT NOT NULL ,
 
-PRIMARY KEY (`cohortId`),
-KEY `fkIdx_64` (`bootcampId`),
-CONSTRAINT `FK_64` FOREIGN KEY `fkIdx_64` (`bootcampId`) REFERENCES `Bootcamp` (`bootcampId`)
+PRIMARY KEY (cohortId),
+KEY fkIdx_64 (bootcampId),
+CONSTRAINT FK_64 FOREIGN KEY fkIdx_64 (bootcampId) REFERENCES Bootcamp (bootcampId)
 );
 
--- ************************************** `Profile`
+-- ************************************** Profile
 
-CREATE TABLE `Profile`
+CREATE TABLE Profile
 (
- `profileId`  INT NOT NULL AUTO_INCREMENT ,
- `userName`   VARCHAR(45) NOT NULL ,
- `firstName`  VARCHAR(45) NOT NULL ,
- `lastName`   VARCHAR(45) NOT NULL ,
- `gender`     CHAR NOT NULL ,
- `avatar`     LONGTEXT NOT NULL ,
- `bio`        TEXT NOT NULL ,
- `email`      VARCHAR(100) NOT NULL ,
- `cohortId`   INT NOT NULL ,
- `roleTypeId` INT NOT NULL ,
+ profileId  INT NOT NULL AUTO_INCREMENT ,
+ userName   VARCHAR(45) NOT NULL ,
+ firstName  VARCHAR(45) NOT NULL ,
+ lastName   VARCHAR(45) NOT NULL ,
+ gender     CHAR NOT NULL ,
+ avatar     LONGTEXT NOT NULL ,
+ bio        TEXT NOT NULL ,
+ email      VARCHAR(100) NOT NULL ,
+ cohortId   INT NOT NULL ,
+ roleTypeId INT NOT NULL ,
 
-PRIMARY KEY (`profileId`),
-KEY `fkIdx_75` (`cohortId`),
-CONSTRAINT `FK_75` FOREIGN KEY `fkIdx_75` (`cohortId`) REFERENCES `Cohort` (`cohortId`),
-KEY `fkIdx_79` (`roleTypeId`),
-CONSTRAINT `FK_79` FOREIGN KEY `fkIdx_79` (`roleTypeId`) REFERENCES `RoleType` (`roleTypeId`)
+PRIMARY KEY (profileId),
+KEY fkIdx_75 (cohortId),
+CONSTRAINT FK_75 FOREIGN KEY fkIdx_75 (cohortId) REFERENCES Cohort (cohortId),
+KEY fkIdx_79 (roleTypeId),
+CONSTRAINT FK_79 FOREIGN KEY fkIdx_79 (roleTypeId) REFERENCES RoleType (roleTypeId)
 );
 
--- ************************************** `Newsfeed`
+-- ************************************** Newsfeed
 
-CREATE TABLE `Newsfeed`
+CREATE TABLE Newsfeed
 (
- `newsfeedId`     INT NOT NULL AUTO_INCREMENT ,
- `eventTimestamp` TIMESTAMP NOT NULL ,
- `newsItem`       TEXT NOT NULL ,
- `profileId`      INT NOT NULL ,
+ newsfeedId     INT NOT NULL AUTO_INCREMENT ,
+ eventTimestamp TIMESTAMP NOT NULL ,
+ newsItem       TEXT NOT NULL ,
+ profileId      INT NOT NULL ,
 
-PRIMARY KEY (`newsfeedId`),
-KEY `fkIdx_122` (`profileId`),
-CONSTRAINT `FK_122` FOREIGN KEY `fkIdx_122` (`profileId`) REFERENCES `Profile` (`profileId`)
+PRIMARY KEY (newsfeedId),
+KEY fkIdx_122 (profileId),
+CONSTRAINT FK_122 FOREIGN KEY fkIdx_122 (profileId) REFERENCES Profile (profileId)
 );
 
--- ************************************** `StudyGroupMember`
+-- ************************************** StudyGroupMember
 
-CREATE TABLE `StudyGroupMember`
+CREATE TABLE StudyGroupMember
 (
- `StudyGroupId` INT NOT NULL ,
- `profileId`    INT NOT NULL ,
+ StudyGroupId INT NOT NULL ,
+ profileId    INT NOT NULL ,
 
-PRIMARY KEY (`StudyGroupId`, `profileId`),
-KEY `fkIdx_106` (`StudyGroupId`),
-CONSTRAINT `FK_106` FOREIGN KEY `fkIdx_106` (`StudyGroupId`) REFERENCES `StudyGroup` (`StudyGroupId`),
-KEY `fkIdx_111` (`profileId`),
-CONSTRAINT `FK_111` FOREIGN KEY `fkIdx_111` (`profileId`) REFERENCES `Profile` (`profileId`)
+PRIMARY KEY (StudyGroupId, profileId),
+KEY fkIdx_106 (StudyGroupId),
+CONSTRAINT FK_106 FOREIGN KEY fkIdx_106 (StudyGroupId) REFERENCES StudyGroup (StudyGroupId),
+KEY fkIdx_111 (profileId),
+CONSTRAINT FK_111 FOREIGN KEY fkIdx_111 (profileId) REFERENCES Profile (profileId)
 );
 
--- ************************************** `SocialMediaLink`
+-- ************************************** SocialMediaLink
 
-CREATE TABLE `SocialMediaLink`
+CREATE TABLE SocialMediaLink
 (
- `url`               VARCHAR(256) NOT NULL ,
- `socialMediaTypeId` INT NOT NULL ,
- `profileId`         INT NOT NULL ,
+ url               VARCHAR(256) NOT NULL ,
+ socialMediaTypeId INT NOT NULL ,
+ profileId         INT NOT NULL ,
 
-PRIMARY KEY (`profileId`, `socialMediaTypeId`),
-KEY `fkIdx_91` (`socialMediaTypeId`),
-CONSTRAINT `FK_91` FOREIGN KEY `fkIdx_91` (`socialMediaTypeId`) REFERENCES `socialMediaType` (`socialMediaTypeId`),
-KEY `fkIdx_126` (`profileId`),
-CONSTRAINT `FK_126` FOREIGN KEY `fkIdx_126` (`profileId`) REFERENCES `Profile` (`profileId`)
+PRIMARY KEY (profileId, socialMediaTypeId),
+KEY fkIdx_91 (socialMediaTypeId),
+CONSTRAINT FK_91 FOREIGN KEY fkIdx_91 (socialMediaTypeId) REFERENCES socialMediaType (socialMediaTypeId),
+KEY fkIdx_126 (profileId),
+CONSTRAINT FK_126 FOREIGN KEY fkIdx_126 (profileId) REFERENCES Profile (profileId)
 );
 
--- ************************************** `Skills`
+-- ************************************** Skills
 
-CREATE TABLE `Skills`
+CREATE TABLE Skills
 (
- `skillsId`    INT NOT NULL AUTO_INCREMENT ,
- `profileId`   INT NOT NULL ,
- `skillsArray` VARCHAR(100) NOT NULL ,
+ skillsId    INT NOT NULL AUTO_INCREMENT ,
+ profileId   INT NOT NULL ,
+ skillsArray VARCHAR(100) NOT NULL ,
 
-PRIMARY KEY (`skillsId`),
-KEY `fkIdx_39` (`profileId`),
-CONSTRAINT `FK_39` FOREIGN KEY `fkIdx_39` (`profileId`) REFERENCES `Profile` (`profileId`)
+PRIMARY KEY (skillsId),
+KEY fkIdx_39 (profileId),
+CONSTRAINT FK_39 FOREIGN KEY fkIdx_39 (profileId) REFERENCES Profile (profileId)
 );
