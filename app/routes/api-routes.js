@@ -9,6 +9,8 @@
 // =============================================================
 module.exports = function(app, models) {
 
+  // console.log(models)
+
   // GET route for getting all of the posts
   app.get("/api/data", function(req, res) {
     res.json( ["API is working"]  );

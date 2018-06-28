@@ -2,15 +2,15 @@
   "development": {
     "username": "root",
     "password": "root",
-    "database": "passportjs",
+    "database": "campface",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "dialectOptions": {
-      "socketPath": "/Applications/MAMP/tmp/mysql/mysql.sock"
+      "socketPath": "/tmp/mysql.sock"
     }
   },
   "test": {
-    "username": "",
+    "username": "root",
     "password": null,
     "database": "",
     "host": "",

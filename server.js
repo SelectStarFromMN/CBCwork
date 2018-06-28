@@ -9,6 +9,7 @@
     //For BodyParser
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
+    app.use(express.static('app/public'));
 
      // For Passport
     app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
@@ -17,7 +18,7 @@
 
      //For Handlebars
     app.set('views', './app/views')
-    app.engine('hbs', exphbs({ extname: '.hbs'}));
+    app.engine('hbs', exphbs({ extname: '.hbs', layoutsDir: 'app/views/layouts', defaultLayout: 'main'}));
     app.set('view engine', '.hbs');
 
 	//Models
@@ -42,7 +43,9 @@
 
 	app.listen(5000, function(err){
 		if(!err)
-		console.log("Site is live"); else console.log(err)
+        console.log("Site is live"); 
+        
+        else console.log(err)
 
 	});
 
