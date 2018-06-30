@@ -37,12 +37,11 @@ module.exports = function (passport, user) {
 
     function (req, email, password, done) {
 
-
       var generateHash = function (password) {
         return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
       };
 
-      User.findOne({ where: { email: email } }).then(function (user) {
+      User.findOne({ where: { email: email } }).then( (user) => {
 
         if (user) {
           return done(null, false, { message: 'That email is already taken' });
@@ -59,7 +58,7 @@ module.exports = function (passport, user) {
           };
 
 
-          User.create(data).then(function (newUser, created) {
+          User.create(data).then( (newUser, created) => {
             if (!newUser) {
               return done(null, false);
             }
@@ -115,6 +114,8 @@ module.exports = function (passport, user) {
         }
 
         var userinfo = user.get();
+
+        console.log(userinfo);
 
         return done(null, userinfo);
 

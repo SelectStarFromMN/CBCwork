@@ -11,8 +11,14 @@ module.exports = function (app,model) {
         res.render("api");
     });
 
+    
     app.get("/style/style.css", function (req, res) {
         res.render(path.join(__dirname, "../public/style/style.css"));
     });
+
+    app.get("/img/cbclog.png", function (req, res) {
+        res.render(path.join(__dirname, "../public/img/cbclog.png"));
+    });
+
 
 }
