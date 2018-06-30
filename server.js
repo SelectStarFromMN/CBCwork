@@ -1,52 +1,39 @@
-    var express    = require('express')
-    var app        = express()
-    var passport   = require('passport')
-    var session    = require('express-session')
-    var bodyParser = require('body-parser')
-    var env        = require('dotenv').load()
-    var exphbs     = require('express-handlebars')
+// Dependencies
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const passport = require("passport");
 
-    //For BodyParser
-    app.use(bodyParser.urlencoded({ extended: true }));
-    app.use(bodyParser.json());
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
+const posts = require("./routes/api/posts");
 
-     // For Passport
-    app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized:true})); // session secret
-    app.use(passport.initialize());
-    app.use(passport.session()); // persistent login sessions
+const app = express();
 
-     //For Handlebars
-    app.set('views', './app/views')
-    app.engine('hbs', exphbs({ extname: '.hbs'}));
-    app.set('view engine', '.hbs');
+// Body-parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-	//Models
-    var models = require("./app/models");
+// Database config
+const db = require("./config/keys").mongoURI;
 
-    // Routes
-    // =============================================================
-    require("./app/routes/auth.js")(app,passport);
-    require("./app/routes/public-html-routes.js")(app, models);
-    require("./app/routes/protected-html-routes.js")(app, models);
-    require("./app/routes/api-routes.js")(app, models);
+// Connect to MongoDB
+mongoose
+  .connect(db)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log(err));
 
-    // Load passport strategies
-    require('./app/config/passport/passport.js')(passport,models.user);
+// Passport middleware
+app.use(passport.initialize());
 
-    //Sync Database
-   	models.sequelize.sync({ force: true }).then(function(){
-        console.log('Nice! Database looks fine')
-    }).catch(function(err){
-        console.log(err,"Something went wrong with the Database Update!")
-    });
+// Passport Config
+require("./config/passport")(passport);
 
-	app.listen(5000, function(err){
-		if(!err)
-		console.log("Site is live"); else console.log(err)
+// Use routes
+app.use("/api/users", users);
+app.use("/api/profile", profile);
+app.use("/api/posts", posts);
 
-	});
+const port = process.env.PORT || 5000;
 
-
-
-
-    
+app.listen(port, () => console.log(`Server running on port ${port}`));
