@@ -2,10 +2,6 @@
 
 module.exports = function(sequelize, DataTypes) {
   return sequelize.define('SocialMediaLink', {
-    url: {
-      type: DataTypes.STRING(256),
-      allowNull: false
-    },
     socialMediaTypeId: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -15,14 +11,18 @@ module.exports = function(sequelize, DataTypes) {
         key: 'socialMediaTypeId'
       }
     },
-    profileId: {
-      type: DataTypes.INTEGER(11),
+    userName: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'Profile',
-        key: 'profileId'
+        key: 'userName'
       }
+    },
+    url: {
+      type: DataTypes.STRING(256),
+      allowNull: false
     }
   }, {
     tableName: 'SocialMediaLink'

@@ -17,12 +17,12 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.TEXT,
       allowNull: false
     },
-    profileId: {
-      type: DataTypes.INTEGER(11),
+    userName: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       references: {
         model: 'Profile',
-        key: 'profileId'
+        key: 'userName'
       }
     }
   }, {

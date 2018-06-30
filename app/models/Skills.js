@@ -8,17 +8,17 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true,
       autoIncrement: true
     },
-    profileId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      references: {
-        model: 'Profile',
-        key: 'profileId'
-      }
-    },
     skillsArray: {
       type: DataTypes.STRING(100),
       allowNull: false
+    },
+    userName: {
+      type: DataTypes.STRING(45),
+      allowNull: false,
+      references: {
+        model: 'Profile',
+        key: 'userName'
+      }
     }
   }, {
     tableName: 'Skills'

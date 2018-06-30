@@ -2,15 +2,10 @@
 
 module.exports = function (sequelize, DataTypes) {
   return sequelize.define('Profile', {
-    profileId: {
-      type: DataTypes.INTEGER(11),
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: true
-    },
     userName: {
       type: DataTypes.STRING(45),
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     firstName: {
       type: DataTypes.STRING(45),
@@ -21,16 +16,16 @@ module.exports = function (sequelize, DataTypes) {
       allowNull: false
     },
     gender: {
-      type: DataTypes.CHAR(1),
-      allowNull: false
+      type: DataTypes.ENUM('F','M'),
+      allowNull: true
     },
     avatar: {
       type: DataTypes.TEXT('medium'),
-      allowNull: false
+      allowNull: true
     },
     bio: {
       type: DataTypes.TEXT,
-      allowNull: false
+      allowNull: true
     },
     email: {
       type: DataTypes.STRING(100),
@@ -38,7 +33,7 @@ module.exports = function (sequelize, DataTypes) {
     },
     cohortId: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'Cohort',
         key: 'cohortId'
@@ -46,11 +41,15 @@ module.exports = function (sequelize, DataTypes) {
     },
     roleTypeId: {
       type: DataTypes.INTEGER(11),
-      allowNull: false,
+      allowNull: true,
       references: {
         model: 'RoleType',
         key: 'roleTypeId'
       }
+    },
+    password: {
+      type: DataTypes.STRING(100),
+      allowNull: false
     }
   }, {
     tableName: 'Profile'
