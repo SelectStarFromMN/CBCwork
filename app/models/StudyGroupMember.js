@@ -11,13 +11,13 @@ module.exports = function(sequelize, DataTypes) {
         key: 'StudyGroupId'
       }
     },
-    profileId: {
-      type: DataTypes.INTEGER(11),
+    userName: {
+      type: DataTypes.STRING(45),
       allowNull: false,
       primaryKey: true,
       references: {
         model: 'Profile',
-        key: 'profileId'
+        key: 'userName'
       }
     }
   }, {
