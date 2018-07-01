@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('socialMediaType', {
+  return sequelize.define('SocialMediaType', {
     socialMediaTypeId: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
@@ -13,6 +13,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
-    tableName: 'socialMediaType'
+    tableName: 'SocialMediaType'
   });
 };
