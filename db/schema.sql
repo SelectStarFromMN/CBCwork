@@ -11,49 +11,39 @@ USE bootcampface_db;
 /*
 DROP TABLE Newsfeed;
 
-
 DROP TABLE StudyGroupMember;
-
 
 DROP TABLE SocialMediaLink;
 
-
 DROP TABLE Skills;
-
 
 DROP TABLE Profile;
 
-
 DROP TABLE Cohort;
-
 
 DROP TABLE StudyGroup;
 
-
-DROP TABLE socialMediaType;
-
+DROP TABLE SocialMediaType;
 
 DROP TABLE Bootcamp;
 
-
 DROP TABLE RoleType;
 */
-
 
 -- ************************************** StudyGroup
 
 CREATE TABLE StudyGroup
 (
- StudyGroupId   INT NOT NULL AUTO_INCREMENT ,
+ studyGroupId   INT NOT NULL AUTO_INCREMENT ,
  studyGroupName VARCHAR(45) NOT NULL ,
  scheduleJSON   MEDIUMTEXT ,
 
-PRIMARY KEY (StudyGroupId)
+PRIMARY KEY (studyGroupId)
 );
 
--- ************************************** socialMediaType
+-- ************************************** SocialMediaType
 
-CREATE TABLE socialMediaType
+CREATE TABLE SocialMediaType
 (
  socialMediaTypeId INT NOT NULL AUTO_INCREMENT ,
  socialMediaName   VARCHAR(45) NOT NULL ,
@@ -99,18 +89,18 @@ CONSTRAINT FK_64 FOREIGN KEY fkIdx_64 (bootcampId) REFERENCES Bootcamp (bootcamp
 
 CREATE TABLE Profile
 (
- profileId  INT NOT NULL AUTO_INCREMENT ,
  userName   VARCHAR(45) NOT NULL ,
  firstName  VARCHAR(45) NOT NULL ,
  lastName   VARCHAR(45) NOT NULL ,
- gender     CHAR NOT NULL ,
- avatar     LONGTEXT NOT NULL ,
- bio        TEXT NOT NULL ,
+ gender     ENUM('F', 'M') ,
+ avatar     LONGTEXT ,
+ bio        TEXT ,
  email      VARCHAR(100) NOT NULL ,
- cohortId   INT NOT NULL ,
- roleTypeId INT NOT NULL ,
+ cohortId   INT ,
+ roleTypeId INT ,
+ password   VARCHAR(100) NOT NULL ,
 
-PRIMARY KEY (profileId),
+PRIMARY KEY (userName),
 KEY fkIdx_75 (cohortId),
 CONSTRAINT FK_75 FOREIGN KEY fkIdx_75 (cohortId) REFERENCES Cohort (cohortId),
 KEY fkIdx_79 (roleTypeId),
@@ -124,40 +114,40 @@ CREATE TABLE Newsfeed
  newsfeedId     INT NOT NULL AUTO_INCREMENT ,
  eventTimestamp TIMESTAMP NOT NULL ,
  newsItem       TEXT NOT NULL ,
- profileId      INT NOT NULL ,
+ userName       VARCHAR(45) NOT NULL ,
 
 PRIMARY KEY (newsfeedId),
-KEY fkIdx_122 (profileId),
-CONSTRAINT FK_122 FOREIGN KEY fkIdx_122 (profileId) REFERENCES Profile (profileId)
+KEY fkIdx_122 (userName),
+CONSTRAINT FK_122 FOREIGN KEY fkIdx_122 (userName) REFERENCES Profile (userName)
 );
 
 -- ************************************** StudyGroupMember
 
 CREATE TABLE StudyGroupMember
 (
- StudyGroupId INT NOT NULL ,
- profileId    INT NOT NULL ,
+ studyGroupId INT NOT NULL ,
+ userName     VARCHAR(45) NOT NULL ,
 
-PRIMARY KEY (StudyGroupId, profileId),
-KEY fkIdx_106 (StudyGroupId),
-CONSTRAINT FK_106 FOREIGN KEY fkIdx_106 (StudyGroupId) REFERENCES StudyGroup (StudyGroupId),
-KEY fkIdx_111 (profileId),
-CONSTRAINT FK_111 FOREIGN KEY fkIdx_111 (profileId) REFERENCES Profile (profileId)
+PRIMARY KEY (studyGroupId, userName),
+KEY fkIdx_106 (studyGroupId),
+CONSTRAINT FK_106 FOREIGN KEY fkIdx_106 (studyGroupId) REFERENCES StudyGroup (studyGroupId),
+KEY fkIdx_111 (userName),
+CONSTRAINT FK_111 FOREIGN KEY fkIdx_111 (userName) REFERENCES Profile (userName)
 );
 
 -- ************************************** SocialMediaLink
 
 CREATE TABLE SocialMediaLink
 (
- url               VARCHAR(256) NOT NULL ,
  socialMediaTypeId INT NOT NULL ,
- profileId         INT NOT NULL ,
+ userName          VARCHAR(45) NOT NULL ,
+ url               VARCHAR(256) NOT NULL ,
 
-PRIMARY KEY (profileId, socialMediaTypeId),
+PRIMARY KEY (socialMediaTypeId, userName),
 KEY fkIdx_91 (socialMediaTypeId),
-CONSTRAINT FK_91 FOREIGN KEY fkIdx_91 (socialMediaTypeId) REFERENCES socialMediaType (socialMediaTypeId),
-KEY fkIdx_126 (profileId),
-CONSTRAINT FK_126 FOREIGN KEY fkIdx_126 (profileId) REFERENCES Profile (profileId)
+CONSTRAINT FK_91 FOREIGN KEY fkIdx_91 (socialMediaTypeId) REFERENCES SocialMediaType (socialMediaTypeId),
+KEY fkIdx_126 (userName),
+CONSTRAINT FK_126 FOREIGN KEY fkIdx_126 (userName) REFERENCES Profile (userName)
 );
 
 -- ************************************** Skills
@@ -165,10 +155,10 @@ CONSTRAINT FK_126 FOREIGN KEY fkIdx_126 (profileId) REFERENCES Profile (profileI
 CREATE TABLE Skills
 (
  skillsId    INT NOT NULL AUTO_INCREMENT ,
- profileId   INT NOT NULL ,
  skillsArray VARCHAR(100) NOT NULL ,
+ userName    VARCHAR(45) NOT NULL ,
 
 PRIMARY KEY (skillsId),
-KEY fkIdx_39 (profileId),
-CONSTRAINT FK_39 FOREIGN KEY fkIdx_39 (profileId) REFERENCES Profile (profileId)
+KEY fkIdx_39 (userName),
+CONSTRAINT FK_39 FOREIGN KEY fkIdx_39 (userName) REFERENCES Profile (userName)
 );
