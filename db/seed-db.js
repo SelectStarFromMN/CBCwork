@@ -103,4 +103,10 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.StudyGroupMember.create({ studyGroupId: 1, userName: 'sumaya1' });
     sqlize.models.StudyGroupMember.create({ studyGroupId: 1, userName: 'tony1' });
 
+    // Newsfeed
+    sqlize.models.Newsfeed.create({ userName: 'chuck1', newsItem: 'Completed a homework!', eventTimestamp: '2018-06-21' });
+    sqlize.models.Newsfeed.create({ userName: 'phil1', newsItem: 'Got a job offer!', eventTimestamp: '2018-06-01' });
+    sqlize.models.Newsfeed.create({ userName: 'sumaya1', newsItem: 'Got a new job!', eventTimestamp: '2018-06-25' });
+    sqlize.models.Newsfeed.create({ userName: 'tony1', newsItem: 'Got a big promotion!', eventTimestamp: '2018-06-30' });
+
 }
