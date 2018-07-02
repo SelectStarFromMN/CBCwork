@@ -44,7 +44,8 @@
     require("./app/routes/api-routes.js")(app, models);
 
     // Load passport strategies
-    require('./app/config/passport/passport.js')(passport, models.user);
+    require('./app/config/passport/passportUser.js')(passport, models.user);
+    require('./app/config/passport/passportProfile.js')(passport, models.Profile);
 
     //Sync Database
     models.sequelize.sync({

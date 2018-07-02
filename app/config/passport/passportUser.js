@@ -15,12 +15,13 @@ module.exports = function (passport, user) {
 
   // used to deserialize the user
   passport.deserializeUser(function (id, done) {
+    console.log("id:",id);
     User.findById(id).then(function (user) {
       if (user) {
         done(null, user.get());
       }
       else {
-        done(user.errors, null);
+        done(user.error, null);
       }
     });
 
