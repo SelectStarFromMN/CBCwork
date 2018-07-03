@@ -25,7 +25,7 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.Profile.create(
         {
             userName: 'chuck1',
-            password: 'password',
+            password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
             firstName: 'Chuck',
             lastName: 'Wessel',
             gender: 'M',
@@ -38,7 +38,7 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.Profile.create(
         {
             userName: 'phil1',
-            password: 'password',
+            password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u', // "password" bcrypted
             firstName: 'Phillip',
             lastName: 'Owusu',
             gender: 'M',
@@ -51,7 +51,7 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.Profile.create(
         {
             userName: 'sumaya1',
-            password: 'password',
+            password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
             firstName: 'Sumaya',
             lastName: 'Lastname',
             gender: 'F',
@@ -64,7 +64,7 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.Profile.create(
         {
             userName: 'tony1',
-            password: 'password',
+            password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
             firstName: 'Tony',
             lastName: 'Rosenow',
             gender: 'M',
