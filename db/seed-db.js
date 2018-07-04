@@ -21,8 +21,8 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.RoleType.create({ roleName: 'Staff' });
     sqlize.models.RoleType.create({ roleName: 'Alumni' });
 
-    // Profile
-    sqlize.models.Profile.create(
+    // Users
+    sqlize.models.Users.create(
         {
             userName: 'chuck1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
@@ -35,7 +35,7 @@ module.exports = function populateSeedData(sqlize) {
             cohortId: 4,
             roleTypeId: 1
         });
-    sqlize.models.Profile.create(
+    sqlize.models.Users.create(
         {
             userName: 'phil1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u', // "password" bcrypted
@@ -48,7 +48,7 @@ module.exports = function populateSeedData(sqlize) {
             cohortId: 4,
             roleTypeId: 1
         });
-    sqlize.models.Profile.create(
+    sqlize.models.Users.create(
         {
             userName: 'sumaya1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
@@ -61,7 +61,7 @@ module.exports = function populateSeedData(sqlize) {
             cohortId: 4,
             roleTypeId: 1
         });
-    sqlize.models.Profile.create(
+    sqlize.models.Users.create(
         {
             userName: 'tony1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
