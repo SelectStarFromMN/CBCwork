@@ -1,8 +1,8 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Skills', {
-    skillsId: {
+  return sequelize.define('Skill', {
+    skillId: {
       type: DataTypes.INTEGER(11),
       allowNull: false,
       primaryKey: true,
@@ -16,11 +16,11 @@ module.exports = function(sequelize, DataTypes) {
       type: DataTypes.STRING(45),
       allowNull: false,
       references: {
-        model: 'Users',
+        model: 'user',
         key: 'userName'
       }
     }
   }, {
-    tableName: 'Skills'
+    tableName: 'Skill'
   });
 };

@@ -35,6 +35,9 @@
     //Models
     var models = require("./app/models");
 
+    // Load passport strategies
+    require('./app/config/passport/passport.js')(passport, models.user);
+
     // Routes
     // =============================================================
     require("./app/routes/staticRoutes.js")(app, models);
@@ -43,17 +46,16 @@
     require("./app/routes/protected-html-routes.js")(app, models);
     require("./app/routes/api-routes.js")(app, models);
 
-    // Load passport strategies
-    require('./app/config/passport/passport.js')(passport, models.user);
-
     // Load seed data
     var populateSeedData = require('./db/seed-db.js');
 
     //Sync Database
    	models.sequelize.sync({ force: true }).then(function(sqlize){
         console.log('Nice! Database looks fine');
-    //    console.log(sqlize.models);
+
+        // console.log(sqlize);
         populateSeedData(sqlize);
+        
     }).catch(function(err){
         console.log(err,"Something went wrong with the Database Update!")
     });

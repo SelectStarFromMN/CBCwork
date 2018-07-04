@@ -1,7 +1,7 @@
 /* jshint indent: 2 */
 
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Users', {
+  return sequelize.define('user', {
     userName: {
       type: DataTypes.STRING(45),
       allowNull: false,
@@ -52,6 +52,6 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: false
     }
   }, {
-    tableName: 'Users'
+    tableName: 'user'
   });
 };

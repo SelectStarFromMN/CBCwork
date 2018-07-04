@@ -21,8 +21,8 @@ module.exports = function populateSeedData(sqlize) {
     sqlize.models.RoleType.create({ roleName: 'Staff' });
     sqlize.models.RoleType.create({ roleName: 'Alumni' });
 
-    // Users
-    sqlize.models.Users.create(
+    // user
+    sqlize.models.user.create(
         {
             userName: 'chuck1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
@@ -35,7 +35,7 @@ module.exports = function populateSeedData(sqlize) {
             cohortId: 4,
             roleTypeId: 1
         });
-    sqlize.models.Users.create(
+    sqlize.models.user.create(
         {
             userName: 'phil1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u', // "password" bcrypted
@@ -48,7 +48,7 @@ module.exports = function populateSeedData(sqlize) {
             cohortId: 4,
             roleTypeId: 1
         });
-    sqlize.models.Users.create(
+    sqlize.models.user.create(
         {
             userName: 'sumaya1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
@@ -61,7 +61,7 @@ module.exports = function populateSeedData(sqlize) {
             cohortId: 4,
             roleTypeId: 1
         });
-    sqlize.models.Users.create(
+    sqlize.models.user.create(
         {
             userName: 'tony1',
             password: '$2a$08$4ILnW9WsLeY2v7N.lMKpVenqUiIWSBr2AiYK9qHXS9yST8AsMFX/u',
@@ -76,10 +76,10 @@ module.exports = function populateSeedData(sqlize) {
         });
 
     // Skills
-    sqlize.models.Skills.create({ skillsArray: '[3,5,7,2,8,4,9,1,6,10]', userName: 'chuck1' });
-    sqlize.models.Skills.create({ skillsArray: '[6,4,9,3,2,8,10,7,5,1]', userName: 'phil1' });
-    sqlize.models.Skills.create({ skillsArray: '[5,9,7,1,4,3,10,2,6,8]', userName: 'sumaya1' });
-    sqlize.models.Skills.create({ skillsArray: '[9,3,8,4,7,10,5,1,6,2]', userName: 'tony1' });
+    sqlize.models.Skill.create({ skillsArray: '[3,5,7,2,8,4,9,1,6,10]', userName: 'chuck1' });
+    sqlize.models.Skill.create({ skillsArray: '[6,4,9,3,2,8,10,7,5,1]', userName: 'phil1' });
+    sqlize.models.Skill.create({ skillsArray: '[5,9,7,1,4,3,10,2,6,8]', userName: 'sumaya1' });
+    sqlize.models.Skill.create({ skillsArray: '[9,3,8,4,7,10,5,1,6,2]', userName: 'tony1' });
 
     // SocialMediaLink
     sqlize.models.SocialMediaLink.create({ socialMediaTypeId: 1,  userName: 'chuck1' , url: 'https://gr.linkedin.com/in/chuckwessel'}); // LinkedIn
