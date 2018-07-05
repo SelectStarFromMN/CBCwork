@@ -1,61 +1,53 @@
-
 //load bcrypt
 var bCrypt = require('bcrypt-nodejs');
 
 module.exports = function (passport, user) {
 
   var User = user;
+
+  console.log( user );
+
   var LocalStrategy = require('passport-local').Strategy;
 
-
   passport.serializeUser(function (user, done) {
-    done(null, user.id);
+    done(null, user);
   });
 
-
   // used to deserialize the user
-  passport.deserializeUser(function (id, done) {
-    console.log("id:",id);
-    User.findById(id).then(function (user) {
-      if (user) {
-        done(null, user.get());
-      }
-      else {
-        done(user.error, null);
-      }
-    });
-
+  passport.deserializeUser(function (user, done) {
+    done(null, user);
   });
 
 
   passport.use('local-signup', new LocalStrategy(
 
     {
-      usernameField: 'email',
+      usernameField: 'username',
       passwordField: 'password',
       passReqToCallback: true // allows us to pass back the entire request to the callback
     },
 
-    function (req, email, password, done) {
+    function (req, username, password, done) {
 
       var generateHash = function (password) {
         return bCrypt.hashSync(password, bCrypt.genSaltSync(8), null);
       };
 
-      User.findOne({ where: { email: email } }).then( (user) => {
+      User.findOne({ where: { userName: username } }).then( (user) => {
 
         if (user) {
-          return done(null, false, { message: 'That email is already taken' });
+          return done(null, false, { message: 'That username is already taken' });
         }
 
         else {
           var userPassword = generateHash(password);
           var data =
           {
-            email: email,
+            email: req.body.email,
             password: userPassword,
-            firstname: req.body.firstname,
-            lastname: req.body.lastname
+            userName: username,
+            firstName: req.body.firstname,
+            lastName: req.body.lastname
           };
 
 
@@ -133,4 +125,3 @@ module.exports = function (passport, user) {
   ));
 
 }
-

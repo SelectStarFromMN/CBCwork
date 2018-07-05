@@ -35,6 +35,9 @@
     //Models
     var models = require("./app/models");
 
+    // Load passport strategies
+    require('./app/config/passport/passportUser.js')(passport, models.user);
+
     // Routes
     // =============================================================
     require("./app/routes/staticRoutes.js")(app, models);
@@ -43,15 +46,18 @@
     require("./app/routes/protected-html-routes.js")(app, models);
     require("./app/routes/api-routes.js")(app, models);
 
-    // Load passport strategies
-    require('./app/config/passport/passportUser.js')(passport, models.user);
-    require('./app/config/passport/passportProfile.js')(passport, models.Profile);
+    // load send data
+    var pupulateSeedData = require('./db/seed-db.js')
+
 
     //Sync Database
     models.sequelize.sync({
         force: true
-    }).then(function () {
-        console.log('Nice! Database looks fine')
+    }).then(function (sqlize) {
+        console.log('Nice! Database looks fine');
+
+        pupulateSeedData(sqlize);
+        
     }).catch(function (err) {
         console.log(err, "Something went wrong with the Database Update!")
     });
