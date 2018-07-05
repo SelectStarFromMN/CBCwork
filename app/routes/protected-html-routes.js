@@ -10,18 +10,15 @@ var protectedController = require('../controllers/protectedController.js');
 // =============================================================
 module.exports = function(app, models) {
 
-    app.get('/layouts/main.handlebar', isLoggedIn, protectedController.dashboard);
+    app.get('/dashboard', isLoggedIn, protectedController.dashboard);
 
     function isLoggedIn(req, res, next) {
+
         if (req.isAuthenticated()){
             return next();
-
-        res.redirect('/signup');
-
         }
-
         else{
-        res.redirect('/signin');
+            res.redirect('/signin');
         }
     }
 
