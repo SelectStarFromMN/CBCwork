@@ -1,32 +1,33 @@
 {
-  "name": "sequelize-passport-example",
+  "name": "cbcwork",
   "version": "1.0.0",
-  "description": "Using Passport with Sequelize and MySQL",
+  "description": "A social network app for University of Minnesota Coding Boot Camp students, alumni, teaching assistants, and instructors.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "client-install": "npm install --prefix client",
+    "start": "node server.js",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lyndachiwetelu/using-passport-with-sequelize-and-mysql.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lyndachiwetelu/node-passport-with-sequelize-and-mysql-example/issues"
-  },
-  "homepage": "https://github.com/lyndachiwetelu/node-passport-with-sequelize-and-mysql-example#readme",
+  "author": "Chuck, Philip, Sumaya, Tony",
+  "license": "MIT",
   "dependencies": {
-    "bcrypt-nodejs": "0.0.3",
-    "body-parser": "^1.16.0",
-    "dotenv": "^4.0.0",
-    "express": "^4.14.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
+    "concurrently": "^3.6.0",
+    "express": "^4.16.3",
     "express-handlebars": "^3.0.0",
-    "express-session": "^1.15.0",
-    "mysql": "^2.13.0",
-    "passport": "^0.3.2",
-    "passport-local": "^1.0.0",
-    "sequelize": "^3.30.1"
+    "express-session": "^1.15.6",
+    "gravatar": "^1.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "mongoose": "^5.2.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "validator": "^9.4.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
   }
 }

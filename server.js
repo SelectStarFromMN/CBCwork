@@ -1,69 +1,49 @@
-    var express = require('express')
-    var app = express()
-    var passport = require('passport')
-    var session = require('express-session')
-    var bodyParser = require('body-parser')
-    var env = require('dotenv').load()
-    var exphbs = require('express-handlebars')
+const express = require("express");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const passport = require("passport");
+const path = require("path");
 
-    //For BodyParser
-    app.use(bodyParser.urlencoded({
-        extended: true
-    }));
-    app.use(bodyParser.json());
-    app.use(express.static('app/public'));
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
+const posts = require("./routes/api/posts");
 
-    // For Passport
-    app.use(session({
-        secret: 'keyboard cat',
-        resave: true,
-        saveUninitialized: true
-    })); // session secret
-    app.use(passport.initialize());
-    app.use(passport.session()); // persistent login sessions
+const app = express();
 
-    //For Handlebars
-    app.set('views', './app/views')
-    app.engine('hbs', exphbs({
-        extname: '.hbs',
-        layoutsDir: 'app/views/layouts',
-        defaultLayout: 'main'
-    }));
+// Body-parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-    app.set('view engine', '.hbs');
+// Database config file
+const db = require("./config/keys").mongoURI;
 
-    //Models
-    var models = require("./app/models");
+// Connect to MongoDB
+mongoose
+  .connect(db)
+  .then(() => console.log("MongoDB Connected"))
+  .catch(err => console.log(err));
 
-    // Load passport strategies
-    require('./app/config/passport/passport.js')(passport, models.user);
+// Passport middleware
+app.use(passport.initialize());
 
-    // Routes
-    // =============================================================
-    require("./app/routes/staticRoutes.js")(app, models);
-    require("./app/routes/auth.js")(app, passport);
-    require("./app/routes/public-html-routes.js")(app, models);
-    require("./app/routes/protected-html-routes.js")(app, models);
-    require("./app/routes/api-routes.js")(app, models);
+// Passport Config
+require("./config/passport")(passport);
 
-    // Load seed data
-    var populateSeedData = require('./db/seed-db.js');
+// Routes
+app.use("/api/users", users);
+app.use("/api/profile", profile);
+app.use("/api/posts", posts);
 
-    //Sync Database
-   	models.sequelize.sync({ force: true }).then(function(sqlize){
-        console.log('Nice! Database looks fine');
+// Server static assets if in production
+if (process.env.NODE_ENV === "production") {
+  // Set static folder
+  app.use(express.static("client/build"));
 
-        // console.log(sqlize);
-        populateSeedData(sqlize);
-        
-    }).catch(function(err){
-        console.log(err,"Something went wrong with the Database Update!")
-    });
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+  });
+}
 
-    app.listen(5000, function (err) {
-        if (!err) {
-            console.log("Site is live");
-            console.log("server is listening on port:5000");
-        } else console.log(err)
+const port = process.env.PORT || 5000;
 
-    });
+app.listen(port, () => console.log(`Server running on port ${port}`));
